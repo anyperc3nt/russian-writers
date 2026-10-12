@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Временная шкала жизни русских писателей и документированные литературные связи.">
+  <title>Русские писатели — время и связи</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="eyebrow"><span class="seal">РП</span> ЛИТЕРАТУРНАЯ КАРТА · 1700—2026</div>
+    <h1>Время писателей.<br><em>Линии встреч.</em></h1>
+    <p class="lede">Кто жил одновременно, кто действительно общался, спорил или работал вместе? Полосы показывают годы жизни, дуги слева — связи, о которых рассказывают источники.</p>
+    <div class="hero-meta">
+      <span><strong id="total-writers">—</strong> авторов и литературных деятелей</span>
+      <span><strong id="total-links">—</strong> подтверждённых связей</span>
+      <span>Данные проверены: октябрь 2026</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="timeline-section" aria-labelledby="timeline-heading">
+      <div class="section-top">
+        <div>
+          <p class="section-kicker">01 / ИССЛЕДОВАТЬ</p>
+          <h2 id="timeline-heading">Общая шкала жизни</h2>
+          <p class="section-intro">Имена расположены по году рождения. Наведите курсор на дугу или выберите её с клавиатуры, чтобы прочитать историю связи.</p>
+        </div>
+        <button id="download" class="download" type="button" aria-label="Скачать выбранный список годов жизни в CSV">↓ Скачать выбранный список CSV</button>
+      </div>
+
+      <fieldset class="list-switch" id="list-switch">
+        <legend>СОСТАВ СПИСКА</legend>
+        <label class="list-choice">
+          <input type="radio" name="writer-list" value="ani" checked>
+          <span class="choice-face"><span class="choice-check" aria-hidden="true"></span><span><strong>Список с картинки Ани</strong><small>22 автора · выбран по умолчанию</small></span></span>
+        </label>
+        <label class="list-choice">
+          <input type="radio" name="writer-list" value="all">
+          <span class="choice-face"><span class="choice-check" aria-hidden="true"></span><span><strong>Расширенный список</strong><small>Все 83 автора</small></span></span>
+        </label>
+      </fieldset>
+
+      <div class="period-guide" aria-label="Периоды временной шкалы">
+        <div><strong>XVIII век</strong><span>1700–1800</span></div>
+        <div><strong>XIX век</strong><span>1800–1900</span></div>
+        <div><strong>Начало ХХ века</strong><span>1900–1920</span></div>
+        <div><strong>Советский период</strong><span>1920–1991</span></div>
+        <div><strong>Современность</strong><span>1991–наше время</span></div>
+      </div>
+
+      <div id="group-legend" class="group-legend" aria-label="Цвета литературных групп">
+        <span class="group-legend-title">ЦВЕТ ПОЛОСЫ</span>
+        <span class="group-legend-note">Группа условная: творчество писателя может относиться к нескольким направлениям.</span>
+      </div>
+
+      <div class="controls">
+        <label class="search-wrap">
+          <span class="sr-only">Найти писателя</span>
+          <span aria-hidden="true" class="search-icon">⌕</span>
+          <input id="search" type="search" placeholder="Найти писателя…" autocomplete="off">
+        </label>
+        <div class="filter-wrap" aria-label="Показать типы связей" id="filters"></div>
+      </div>
+
+      <div class="chart-outer" id="chart-outer" role="region" aria-label="Временная шкала писателей; на узком экране прокручивается горизонтально" tabindex="0">
+        <div class="chart-inner">
+          <div class="chart-head">
+            <div class="head-rel">СВЯЗИ</div>
+            <div class="head-name">ПИСАТЕЛЬ</div>
+            <div class="head-years">ГОДЫ ЖИЗНИ</div>
+            <div id="axis" class="axis" aria-label="Шкала годов"></div>
+          </div>
+          <div id="chart-body" class="chart-body">
+            <svg id="connections" class="connections" aria-label="Дуги литературных связей"></svg>
+            <div id="rows" class="rows"></div>
+            <div id="hover-card" class="hover-card" role="tooltip" hidden></div>
+          </div>
+        </div>
+      </div>
+      <p class="chart-hint">↔ На небольшом экране шкалу можно прокрутить. Выберите имя, чтобы выделить его связи и упростить наведение на них. Длинные дуги уходят левее коротких. <span id="visible-count"></span></p>
+    </section>
+
+    <section class="reading-room" aria-labelledby="reading-heading">
+      <div class="reading-heading">
+        <p class="section-kicker">02 / ПРИМЕЧАНИЯ</p>
+        <h2 id="reading-heading">За каждой линией — история</h2>
+      </div>
+      <div class="reading-grid">
+        <div class="note-card" id="detail-card" aria-live="polite">
+          <div class="note-ornament">✦</div>
+          <p class="note-label">ВЫБРАННАЯ СВЯЗЬ</p>
+          <h3 id="detail-title">Выберите дугу на шкале</h3>
+          <p id="detail-text">Подсказка покажет краткую историю при наведении. Нажмите на дугу, чтобы открыть ссылку на источник здесь.</p>
+          <a id="detail-source" href="#" target="_blank" rel="noopener noreferrer" hidden>Открыть источник ↗</a>
+        </div>
+        <div class="method-card">
+          <h3>Как читать карту</h3>
+          <p>Полоса идёт от года рождения до года смерти. Стрелка на конце означает, что автор жив по состоянию на октябрь 2026 года. Общая шкала показывает, какие жизни пересекались во времени.</p>
+          <p>Дуги отмечают конкретные встречи, переписку, сотрудничество, дружбу или литературную полемику. Это <strong>выборка документированных связей</strong>, а не исчерпывающая сеть: отсутствие дуги ничего не говорит об отсутствии знакомства.</p>
+          <p><a href="https://tolstoymuseum.ru/news/2024/12/03/75204/" target="_blank" rel="noopener noreferrer">Толстой и Достоевский</a> были современниками, но не встретились. То же верно для <a href="https://old.pushkinmuseum.ru/?q=exhibition%2Fvystavka-siyaya-doblestyu-i-slavoy-i-naukoy-ot-fonvizina-do-lermontova-zarisovki-k" target="_blank" rel="noopener noreferrer">Пушкина и Лермонтова</a>. Поэтому простое совпадение полос не становится дугой.</p>
+          <p>Цвет полосы обозначает одну широкую историко-литературную группу. Для ориентиров использованы материалы о <a href="https://www.culture.ru/s/vopros/zolotoj-vek-russkoj-literatury/" target="_blank" rel="noopener noreferrer">Золотом веке</a> и <a href="https://www.culture.ru/s/gid-po-serebryanomu-veku/" target="_blank" rel="noopener noreferrer">Серебряном веке</a>. Древнерусская литература пока не представлена: эта шкала начинается с 1700 года.</p>
+          <p>Екатерина II оставлена по исходному списку как литератор и покровительница словесности; обозначение «литературные салоны» само по себе не описывает её роль.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-brand">РП <span>Русские писатели · время и связи</span></div>
+      <div class="footer-sources">Годы жизни сверены по <a href="https://en.wikipedia.org/wiki/List_of_Russian-language_writers" target="_blank" rel="noopener noreferrer">списку русскоязычных писателей</a> и материалам музеев. Для каждой дуги ссылка на публикацию доступна после выбора. Страница работает без интернета; он понадобится только для открытия источников.</div>
+    </footer>
+  </main>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
